@@ -1,0 +1,34 @@
+<%= form_with(model: post, local: true) do |form| %>
+  <% if post.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(post.errors.count, "error") %> prohibited this post from being saved:</h2>
+      <ul>
+        <% post.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="form-group">
+    <%= form.label "タイトル" %>
+    <%= form.text_field :title, placeholder: "1~20文字以内", class: "form-control" %>
+  </div>
+  <div class="form-group">
+    <%= form.label "見出し" %>
+    <%= form.text_field :brief, placeholder: "1~30文字以内", class: "form-control" %>
+  </div>
+  <div class="form-group">
+    <%= form.label "内容" %>
+    <%= form.text_area :body, class: "form-control" %>
+  </div>
+  <div class="field">
+    <% @tags.each do |tag| %>
+      <%= check_box_tag "post[tag_ids][]", tag.id, @post.tags.include?(tag) %>
+      <%= form.label "##{tag.name}", class: "#{tag.color}" %>
+      <br/>
+    <% end %>
+  </div>
+  <div class="actions text-center">
+    <%= form.submit class: "btn btn-primary" %>
+  </div>
+<% end %>
