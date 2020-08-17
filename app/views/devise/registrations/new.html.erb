@@ -1,0 +1,25 @@
+<div class="container">
+    <div class="col-6 mx-auto text-center">
+      <h1 class="h3 my-3 font-weight-normal">新規会員登録</h1>
+      <br/>
+      <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+      <div class="input-group">
+        <div class="input-group-prepend">
+            <span class="input-group-text">@</span>
+          </div> 
+          <%= f.text_field :name, autofocus: true, class:"form-control", :placeholder => "ユーザー名" %> 
+        </div>
+        <br/>
+      <%= f.email_field :email, autofocus: true, autocomplete: "email" , class:"form-control", :placeholder => "メールアドレス" %>
+      <br/>
+      <%= f.password_field :password, autocomplete: "new-password", class: "form-control", :placeholder => "パスワード（#{@minimum_password_length}文字以上）" %> 
+      <br />
+      <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control", :placeholder => "パスワード（確認）" %>
+      <br/>
+      <div class="action">
+        <%= f.submit "新規登録", class: "btn btn-lg btn-primary btn-block" %>
+        <% end %> 
+      </div>
+      <br/>
+    </div>
+  </div>

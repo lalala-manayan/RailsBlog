@@ -4,7 +4,13 @@
       <div class="col-md-6 px-0">
         <h1 class="display-4 font-italic">Blog-Tutorialでは、Railsでブログサイトを作ります。</h1>
         <p class="lead my-3">今回作成するブログの機能としては、タグ、画像登録、新規登録、ログイン、いいね、コメント、管理ユーザー等です。</p>
-          <a href="#" class="btn btn-primary">ログイン</a>
+          <!-- 以下修正 -->
+          <% if user_signed_in? %>     
+            <%= link_to "投稿する", new_post_path, class: "btn btn-primary" %>
+          <% else %>
+              <%= link_to "ログイン", new_user_session_path, class: "btn btn-primary" %>
+          <% end %>
+          <!-- ここまで修正 -->
       </div>
       <div class="col-md-6">
         <h3 class="text-center">注目の話題</h3>
@@ -30,7 +36,7 @@
           <div class="card-body">
             <div class="text-muted text-right">
               <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" width=20 height=20 alt="">
-              <span><a href="#">ユーザーさん</a></span>
+              <span><%= link_to "@#{post.user.name}", users_path(user_id: post.user.id) , class: "text-muted" %></span>
             </div>
             <h4 class="my-2 text-center"><strong><%= post.title %></strong></h4>
             <h5 class="text-center"><u><%= post.brief %></u></h5>
@@ -43,8 +49,12 @@
             </div>
             <!-- ここまで修正 -->         
             <div class="d-flex justify-content-between align-items-center mt-1">
-              <%= link_to '編集', edit_post_path(post), class: "btn btn-sm btn-outline-secondary" %>
-              <%= link_to '削除', post, method: :delete, data: { confirm: '完全に削除しますか？' }, class: "btn btn-sm btn-outline-secondary" %>
+              <!-- 以下修正 -->
+                <% if user_signed_in? && post.user == current_user %>
+                  <%= link_to "編集", edit_post_path(post), class: "btn btn-sm btn-outline-secondary" %>
+                  <%= link_to "削除", post, method: :delete, data: { confirm: '完全に削除しますか？' }, class: "btn btn-sm btn-outline-secondary" %>
+                <% end %>
+                <!-- ここまで修正 -->
               <small class="text-muted ml-auto"><span><%= time_ago_in_words(post.created_at) %>前</span></small>
             </div>
           </div>

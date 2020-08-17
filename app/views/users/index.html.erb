@@ -1,0 +1,51 @@
+<div class="container">
+  <div class="mx-auto my-5 px-5 py-5">
+    <h3 class="text-center mb-3">@<%= @user.name %></h3> <!-- 修正 -->
+    <div class="text-center">
+      <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" width=150 height=150 alt="">
+      <br>
+      <!-- 以下修正 -->
+      <% if user_signed_in? && @user.id == current_user.id %>
+        <%= link_to "プロフィール編集", edit_user_registration_path, class: "btn btn-sm btn-outline-secondary mt-1" %>
+      <% end %>
+      <!-- ここまで修正 -->
+    </div>
+  </div>
+  <hr>
+  <div class="row">
+    <% if @posts.present? %> <!-- 修正 -->
+      <% @posts.each do |post| %> <!-- 修正 -->
+        <div class="col-md-4">
+          <div class="card mb-4 box-shadow">
+            <div class="mx-auto">
+              <%= link_to image_tag("http://placehold.it/640x426", class: "card-img-top"), post %>
+            </div>
+            <div class="card-body">
+              <div class="text-muted text-right">
+                <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" width=20 height=20 alt="">
+                <span><%= link_to "@#{post.user.name}", users_path , class: "text-muted" %></span>
+              </div>
+              <h4 class="my-2 text-center"><strong><%= post.title %></strong></h4>
+              <h5 class="text-center"><u><%= post.brief %></u></h5>
+              <p class="card-text"><%= post.body.truncate(100)  %><%= link_to "さらに読む", post %></p>            
+              <div>
+                <% post.tags.each do |tag| %>
+                  <%= link_to "##{tag.name}", posts_path(tag_id: tag.id), class: "#{tag.color}" %>
+                <% end %>
+              </div>
+              <div class="d-flex justify-content-between align-items-center mt-1">
+                  <!-- 以下修正 -->
+                <% if user_signed_in? && post.user == current_user %>
+                  <%= link_to "編集", edit_post_path(post), class: "btn btn-sm btn-outline-secondary" %>
+                  <%= link_to "削除", post, method: :delete, data: { confirm: '完全に削除しますか？' }, class: "btn btn-sm btn-outline-secondary" %>
+                <% end %>
+                <!-- ここまで修正 -->
+                <small class="text-muted ml-auto"><span><%= time_ago_in_words(post.created_at) %></span></small>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+</div>
