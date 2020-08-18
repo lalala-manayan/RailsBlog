@@ -2,7 +2,11 @@
   <div class="card my-3">
     <div class="row">
       <div class="col-md-6 mx-auto">
-        <img class="card-img-top" src="http://placehold.it/640x426" alt="">
+        <% if @post.image.present? %>
+          <%= image_tag @post.image.to_s, class: "card-img-top" %>
+        <% else %>
+          <img class="card-img-top" src="http://placehold.it/640x426" alt="">
+        <% end %>
       </div>
       <div class="col-md-6 px-5">
         <h2 class="mb-0 text-center mt-5"><strong><%= @post.title %></strong></h2>
@@ -24,7 +28,7 @@
         <hr>
         <div class="text-muted text-right mb-3">
           <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" width=20 height=20 alt="">
-          <span><a href="#">ユーザーさん</a></span>
+          <%= link_to "#{current_user.name}さん", users_path(user_id: current_user.id) %>
         </div>
         <h4 class="card-text"><%= @post.body %></h4>
       </div> 

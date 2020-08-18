@@ -2,7 +2,11 @@
   <div class="row">
     <div class="col-md-6 my-3 text-center">
       <h3 class="mb-2">アイキャッチ画像</h3>
-        <img class="card-img-top" src="http://placehold.it/640x426" alt="">
+        <% if @post.image.present? %>
+          <%= image_tag @post.image.to_s, class: "card-img-top" %>
+        <% else %>
+          <img class="card-img-top" src="http://placehold.it/640x426" alt="">
+        <% end %>
     </div>
     <div class="col-md-6 my-3 ml-auto">
       <h3 class="my-3 text-center">投稿編集中</h3>

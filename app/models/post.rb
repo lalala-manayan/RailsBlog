@@ -6,4 +6,5 @@ class Post < ApplicationRecord
   # PostはTagをPostTag中間テーブルを介してたくさん持っている
   has_many :tags, through: :post_tags, dependent: :destroy
   belongs_to :user
+  mount_uploader :image, ImagesUploader
 end
