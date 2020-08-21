@@ -35,3 +35,21 @@
     </div>
   </div>
 </div>
+<div class="container"> 
+  <hr>
+  <% if user_signed_in? %>
+    <% if current_user.already_liked?(@post) %>
+      <%= button_to "#{@post.likes.count}いいね！", post_like_path(@post), method: :delete, class: "btn btn-success btn-sm mb-3" %>
+    <% else %>
+      <%= button_to "#{@post.likes.count}いいね", post_likes_path(@post) , class: "btn btn-secondary btn-sm mb-3" %>
+    <% end %>
+    <% @post.liked_users.each do |user| %>
+      <% if user.image.present? %>
+        <%= image_tag user.image.to_s, size: '20x20' %>
+      <% else %>
+        <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" width=20 height=20 alt="">
+      <% end %>
+      <%= link_to "@#{user.name}", users_path(user_id: user.id), class: "text-muted" %>
+    <% end %>
+  <% end %>
+</div>

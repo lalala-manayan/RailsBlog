@@ -10,7 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_17_164133) do
+ActiveRecord::Schema.define(version: 2020_08_19_170825) do
+
+  create_table "likes", force: :cascade do |t|
+    t.integer "post_id"
+    t.integer "users_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["post_id"], name: "index_likes_on_post_id"
+    t.index ["users_id"], name: "index_likes_on_users_id"
+  end
 
   create_table "post_tags", force: :cascade do |t|
     t.integer "post_id"

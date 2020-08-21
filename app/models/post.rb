@@ -7,4 +7,6 @@ class Post < ApplicationRecord
   has_many :tags, through: :post_tags, dependent: :destroy
   belongs_to :user
   mount_uploader :image, ImagesUploader
+  has_many :likes #追加
+  has_many :liked_users, through: :likes, source: :user #追加
 end
