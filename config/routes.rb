@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   # }
   resources :posts do
     resources :likes, only: [:create, :destroy]
+    resources :comments, only: [:create, :destroy] #追加
   end
   resources :tags
   devise_for :users, controllers: {

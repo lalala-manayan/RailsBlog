@@ -51,5 +51,32 @@
       <% end %>
       <%= link_to "@#{user.name}", users_path(user_id: user.id), class: "text-muted" %>
     <% end %>
+        <!-- 以下追加-->
+    <hr>
+    <%= @post.comments.count %>コメント<br/>
+    <%= form_for [@post, @comment] do |f| %>
+      <%= f.hidden_field :user_id %>
+      <%= f.hidden_field :post_id %>
+      <%= f.text_area :content, size: "100%", class: "from-control my-3", placeholder: "コメントを入力" %>
+      <br>
+      <%= f.submit 'コメントする', class: "btn btn-primary mb-3 ml-auto" %>
+    <% end %>
+    <% @comments.each do |comment| %>
+      <hr>
+      <% if comment.user.image.present? %>
+        <%= image_tag comment.user.image.to_s, size: '20x20' %>
+      <% else %>
+        <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" width=20 height=20 alt="">
+      <% end %>
+      <%= link_to "@#{comment.user.name}", users_path(user_id: comment.user.id), class: "text-muted" %>
+      <%= comment.created_at.strftime("%Y年%m月%d日 %H:%M:%S") %>
+      <% if current_user.id == comment.user.id %>
+        <%=link_to "削除", post_comment_path(comment.post.id, comment.id), method: :delete, class: "btn btn-sm btn-outline-secondary" %>
+      <% end %>
+      <br/>
+      <a>"<%= comment.content %>"</a><br/>
+    <% end %>
+    <hr>
+    <!-- ここまで追加-->
   <% end %>
 </div>

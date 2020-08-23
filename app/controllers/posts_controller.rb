@@ -18,7 +18,8 @@ class PostsController < ApplicationController
   def show
     @like = Like.new
     @tags = Tag.all 
-
+    @comments = @post.comments.includes(:user).all.order(created_at: "DESC")  #追加
+    @comment  = @post.comments.build(user_id: current_user.id) if current_user
   end
   
 

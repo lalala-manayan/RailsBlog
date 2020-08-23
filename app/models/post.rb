@@ -9,4 +9,6 @@ class Post < ApplicationRecord
   mount_uploader :image, ImagesUploader
   has_many :likes #追加
   has_many :liked_users, through: :likes, source: :user #追加
+  has_many :comments #追加
+  has_many :commented_users, through: :comments, source: :user
 end
