@@ -15,6 +15,7 @@ gem 'bootsnap', '>= 1.1.0', require: false
 gem 'jquery-rails'
 gem 'devise'
 gem 'carrierwave'
+gem 'activeadmin'
  
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]

@@ -11,4 +11,5 @@ class Post < ApplicationRecord
   has_many :liked_users, through: :likes, source: :user #追加
   has_many :comments #追加
   has_many :commented_users, through: :comments, source: :user
+  accepts_nested_attributes_for :post_tags, :allow_destroy => true 
 end
